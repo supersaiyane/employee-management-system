@@ -19,10 +19,18 @@ CREATE TABLE IF NOT EXISTS users (
     status ENUM('active', 'inactive') NOT NULL DEFAULT 'active'
 );
 
--- Create a table for leads
-CREATE TABLE IF NOT EXISTS emp_manager (
-    emp_manager_name VARCHAR(100) NOT NULL,
-    emp_manager_emp_id INT PRIMARY KEY,
+
+-- Create a table for emp_reporting_manager
+CREATE TABLE IF NOT EXISTS emp_reporting_manager (
+    reporting_mngr_name VARCHAR(100) NOT NULL,
+    id INT PRIMARY KEY,
+    status ENUM('active', 'inactive') NOT NULL DEFAULT 'active'
+);
+
+-- Create a table for account_owner_name
+CREATE TABLE IF NOT EXISTS project_account_owner (
+    account_owner_name VARCHAR(100) NOT NULL,
+    id INT PRIMARY KEY,
     status ENUM('active', 'inactive') NOT NULL DEFAULT 'active'
 );
 
@@ -59,7 +67,7 @@ CREATE TABLE IF NOT EXISTS emp_workplace_status (
 -- Create a table for projects
 CREATE TABLE IF NOT EXISTS emp_project (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    emp_project VARCHAR(20) NOT NULL,
+    emp_project_name VARCHAR(20) NOT NULL,
     status ENUM('active', 'inactive') NOT NULL DEFAULT 'active'
 );
 
@@ -72,8 +80,10 @@ CREATE TABLE IF NOT EXISTS emp (
     emp_joining_date DATE NOT NULL,
     emp_leaving_date DATE,
     emp_salary DECIMAL(10, 2),
-    emp_manager INT NOT NULL,
-    FOREIGN KEY (emp_manager) REFERENCES emp_manager(emp_manager_emp_id),
+    reporting_mngr_name INT NOT NULL,
+    FOREIGN KEY (reporting_mngr_name) REFERENCES emp_reporting_manager(id),
+    account_owner_name INT NOT NULL,
+    FOREIGN KEY (account_owner_name) REFERENCES project_account_owner(id),
     emp_designation INT NOT NULL,
     FOREIGN KEY (emp_designation) REFERENCES emp_designation(id),    
     emp_department INT NOT NULL,

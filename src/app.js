@@ -7,8 +7,8 @@ const session = require('express-session');
 const app = express();
 const fs = require('fs');
 const cors = require('cors');
-const db = require('./js/database'); // Importing your database connection
-const checkAuthentication = require('./js/authMiddleware'); // Import the authentication middleware
+const db = require('./public/js/database'); // Importing your database connection
+const checkAuthentication = require('./public/js/authMiddleware'); // Import the authentication middleware
 
 //Routes
 app.get('/', (req, res) => {
@@ -19,10 +19,12 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public'));
 });
 
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Use CORS middleware
 app.use(cors({
-  origin: 'http://localhost:3000', // Replace with the URL where your frontend is hosted
+  origin: 'http://localhost:3001', // Replace with the URL where your frontend is hosted
   credentials: true // Allow sending cookies and credentials
 }));
 
@@ -38,19 +40,6 @@ app.use(session({
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
-// app.use('/public', (req, res, next) => {
-//   if (req.url === '/index.html') {
-//       // Apply authentication check
-//       checkAuthentication(req, res, next);
-//   } else {
-//       // Serve other static files normally
-//       next();
-//   }
-// }, express.static(path.join(__dirname, 'public')));
-
-
 
 app.post('/login', (req, res) => {
   const username = req.body.username;
@@ -88,6 +77,16 @@ app.get('/logout', (req, res) => {
       }
   });
 });
+
+
+app.get('/api/employee-status', (req, res) => {
+  connection.query('SELECT status FROM emp_company_status', (error, results, fields) => {
+      if (error) throw error;
+      res.json(results);
+  });
+});
+
+
 
 const port = 3001;
 app.listen(port, () => {

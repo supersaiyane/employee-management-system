@@ -24,7 +24,7 @@ connection.connect(error => {
   console.log('Connected to MySQL as ID ' + connection.threadId);
 
   // Read and execute SQL file
-  fs.readFile('src/sql/create_database.sql', 'utf8', (err, sql) => {
+  fs.readFile('../sql/create_database.sql', 'utf8', (err, sql) => {
     if (err) {
       console.error('Error reading SQL file:', err);
       return;
