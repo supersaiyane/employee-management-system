@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/src/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="/src/css/main.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Welcome to the Dashboard</h1>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs" id="dashboardTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="employeeMaster-tab" data-bs-toggle="tab" data-bs-target="#employeeMaster" type="button" role="tab" aria-controls="employeeMaster" aria-selected="true">Employee Master</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="addEmployee-tab" data-bs-toggle="tab" data-bs-target="#addEmployee" type="button" role="tab" aria-controls="addEmployee" aria-selected="false">Add Employee</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="employeeModification-tab" data-bs-toggle="tab" data-bs-target="#employeeModification" type="button" role="tab" aria-controls="employeeModification" aria-selected="false">Employee Modification</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="otherModification-tab" data-bs-toggle="tab" data-bs-target="#othermodification" type="button" role="tab" aria-controls="otherModification" aria-selected="false">Other Modifications</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="reporting-tab" data-bs-toggle="tab" data-bs-target="#reporting" type="button" role="tab" aria-controls="reporting" aria-selected="false">Reporting</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="userManagement-tab" data-bs-toggle="tab" data-bs-target="#userManagement" type="button" role="tab" aria-controls="userManagement" aria-selected="false">User Management</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="excelUpload-tab" data-bs-toggle="tab" data-bs-target="#excelUpload" type="button" role="tab" aria-controls="excelUpload" aria-selected="false">Excel Upload</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="dashboardTabContent">
+            <div class="tab-pane fade show active" id="employeeMaster" role="tabpanel" aria-labelledby="employeeMaster-tab">
+                <!-- Content for Employee Master -->
+            </div>
+            <div class="tab-pane fade" id="addEmployee" role="tabpanel" aria-labelledby="addEmployee-tab">
+                <div class="accordion" id="addEmployeeAccordion">
+                    <!-- Accordion Item 1: Basic Details -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingBasicDetails">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBasicDetails" aria-expanded="true" aria-controls="collapseBasicDetails">
+                                Basic Details
+                            </button>
+                        </h2>
+                        <div id="collapseBasicDetails" class="accordion-collapse collapse show" aria-labelledby="headingBasicDetails">
+                            <div class="accordion-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="employeeName" class="form-label">Employee Name</label>
+                                        <input type="text" class="form-control" id="employeeName">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="empId" class="form-label">EmpID</label>
+                                        <input type="text" class="form-control" id="empId">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="joiningDate" class="form-label">Joining Date</label>
+                                        <input type="date" class="form-control" id="joiningDate">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="empPhoto" class="form-label">Emp Photo</label>
+                                        <input type="file" class="form-control" id="empPhoto">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="employeeStatus" class="form-label">Employee Status</label>
+                                        <select class="form-select" id="employeeStatus">
+                                            <option selected>Choose...</option>
+                                            <option value="active">Active</option>
+                                            <option value="inactive">Inactive</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Accordion Item 2: Project Details -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingProjectDetails">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProjectDetails" aria-expanded="false" aria-controls="collapseProjectDetails">
+                                Project Details
+                            </button>
+                        </h2>
+                        <div id="collapseProjectDetails" class="accordion-collapse collapse" aria-labelledby="headingProjectDetails">
+                            <div class="accordion-body">
+                                <form>
+                                    <div class="mb-3 form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="projectOptions" id="projectOption" value="project" onchange="showProjectDetails(this.value)">
+                                        <label class="form-check-label" for="projectOption">Project</label>
+                                    </div>
+                                    <div class="mb-3 form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="projectOptions" id="benchOption" value="bench" onchange="showProjectDetails(this.value)">
+                                        <label class="form-check-label" for="benchOption">Bench</label>
+                                    </div>
+                
+                                    <div id="projectDetails" style="display:none;">
+                                        <div class="mb-3">
+                                            <label for="projectFromDate" class="form-label">From Date</label>
+                                            <input type="date" class="form-control" id="projectFromDate">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="employeeProject" class="form-label">Employee Project</label>
+                                            <select class="form-select" id="employeeProject">
+                                                <option selected>Choose...</option>
+                                                <!-- Add project options here -->
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="employeeLead" class="form-label">Employee Lead</label>
+                                            <select class="form-select" id="employeeLead">
+                                                <option selected>Choose...</option>
+                                                <!-- Add lead options here -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Accordion Item for Excel File Upload -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingExcelUpload">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExcelUpload" aria-expanded="false" aria-controls="collapseExcelUpload">
+                                Upload Excel File for Bulk Employee Addition
+                            </button>
+                        </h2>
+                        <div id="collapseExcelUpload" class="accordion-collapse collapse" aria-labelledby="headingExcelUpload">
+                            <div class="accordion-body">
+                                <form id="excelUploadForm">
+                                    <div class="mb-3">
+                                        <label for="excelFile" class="form-label">Upload Excel File</label>
+                                        <input type="file" class="form-control" id="excelFile" accept=".xlsx, .xls">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>             
+                <script>
+                    function showProjectDetails(value) {
+                        var projectDetailsDiv = document.getElementById('projectDetails');
+                        if (value === 'project') {
+                            projectDetailsDiv.style.display = 'block';
+                        } else {
+                            projectDetailsDiv.style.display = 'none';
+                        }
+                    }
+                </script>                
+            </div>
+            <div class="tab-pane fade" id="employeeModification" role="tabpanel" aria-labelledby="employeeModification-tab">
+                <!-- Employee Modification Tab Content -->
+                <!-- <div id="employeeModification" class="tab-pane fade" role="tabpanel" aria-labelledby="employeeModification-tab"> -->
+                    <!-- Input for Employee ID -->
+                    <div class="mb-3">
+                        <label for="employeeIdInput" class="form-label">Employee ID</label>
+                        <input type="text" class="form-control" id="employeeIdInput" placeholder="Enter Employee ID">
+                        <button class="btn btn-primary mt-2" id="fetchEmployeeDetails">Retrieve Details</button>
+                    </div>
+
+                    <!-- Accordion for Displaying Employee Details -->
+                    <div class="accordion" id="employeeDetailsAccordion">
+                        <!-- Employee Details -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingEmployeeDetails">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEmployeeDetails" aria-expanded="false" aria-controls="collapseEmployeeDetails">
+                                    Employee Details
+                                </button>
+                            </h2>
+                            <div id="collapseEmployeeDetails" class="accordion-collapse collapse show" aria-labelledby="headingEmployeeDetails">
+                                <div class="accordion-body">
+                                    <!-- Fields to display employee details -->
+                                    <p><strong>Employee Name:</strong> <span id="employeeName"></span></p>
+                                    <p><strong>EmpID:</strong> <span id="employeeId"></span></p>
+                                    <p><strong>Joining Date:</strong> <span id="joiningDate"></span></p>
+                                    <p><strong>Employee Photo:</strong> <span id="employeePhoto"></span></p>
+                                    <p><strong>Employee Status:</strong> <span id="employeeStatus"></span></p>
+                                    <p><strong>Employee Project:</strong> <span id="employeeProject"></span></p>
+                                    <p><strong>Employee Lead:</strong> <span id="employeeLead"></span></p>
+                                    <p><strong>Employee Project Name:</strong> <span id="employeeProjectName"></span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modify Details -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingModifyDetails">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseModifyDetails" aria-expanded="false" aria-controls="collapseModifyDetails">
+                                    Modify Details
+                                </button>
+                            </h2>
+                            <div id="collapseModifyDetails" class="accordion-collapse collapse" aria-labelledby="headingModifyDetails">
+                                <div class="accordion-body">
+                                    <!-- Dropdown to select field to modify -->
+                                    <label for="modifyFieldSelect" class="form-label">Select Field to Modify</label>
+                                    <select class="form-select" id="modifyFieldSelect">
+                                        <option selected>Choose...</option>
+                                        <option value="employeeName">Employee Name</option>
+                                        <option value="empId">EmpID</option>
+                                        <option value="joiningDate">Joining Date</option>
+                                        <option value="employeePhoto">Emp Photo</option>
+                                        <option value="employeeStatus">Employee Status</option>
+                                        <option value="employeeProject">Employee Project</option>
+                                        <option value="employeeLead">Employee Lead</option>
+                                        <option value="employeeProjectName">Employee Project Name</option>
+                                    </select>
+                                    <!-- Additional form elements for modification can be added here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!-- </div> -->
+            </div>
+            <div class="tab-pane fade" id="otherModification" role="tabpanel" aria-labelledby="otherModification-tab">
+                <!-- Content for Reporting -->
+            </div>
+            <div class="tab-pane fade" id="reporting" role="tabpanel" aria-labelledby="reporting-tab">
+                <!-- Content for Reporting -->
+            </div>
+            <div class="tab-pane fade" id="userManagement" role="tabpanel" aria-labelledby="userManagement-tab">
+                <!-- Content for User Management -->
+            </div>
+            <div class="tab-pane fade" id="excelUpload" role="tabpanel" aria-labelledby="excelUpload-tab">
+                <form id="excelUploadForm">
+                    <div class="mb-3">
+                        <label for="excelFile" class="form-label">Upload Excel File</label>
+                        <input type="file" class="form-control" id="excelFile" accept=".xlsx, .xls">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Logout Button -->
+        <button id="logoutButton" class="btn btn-primary logout-btn">Logout</button>
+    </div>
+
+    <!-- JavaScript to handle logout -->
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            fetch('/logout', { method: 'GET', credentials: 'include' })
+            .then(response => {
+                window.location.href = '/';
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+
+    <script src="/src/js/excelUpload.js"></script>
+    <script src="/src/js/addemployee-excelupload.js"></script>
+    <script src="/src/js/empmod-fetch.js"></script>
+    <script src="/src/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
