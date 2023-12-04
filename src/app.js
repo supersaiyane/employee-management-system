@@ -36,8 +36,6 @@ app.use(session({
     saveUninitialized: true
 }));
 
-
-
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -78,13 +76,24 @@ app.get('/logout', (req, res) => {
   });
 });
 
+const util = require('util');
+const query = util.promisify(db.query).bind(db);
 
-app.get('/api/employee-status', (req, res) => {
-  connection.query('SELECT status FROM emp_company_status', (error, results, fields) => {
-      if (error) throw error;
-      res.json(results);
-  });
+app.get('/api/employee-status', async (req, res) => {
+  try {
+    const results = await query('SELECT emp_company_status FROM emp_company_status');
+    //console.log(results);
+    const statuses = results.map(row => row.emp_company_status);
+    console.log(statuses);
+    res.json(statuses);
+  } catch (error) {
+    //console.error(error);
+    res.status(500).send('An error occurred while fetching data');
+  }
 });
+
+
+
 
 
 

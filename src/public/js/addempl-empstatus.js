@@ -1,16 +1,26 @@
-    document.getElementById('employeeStatus').addEventListener('click', function() {
-        fetch('/api/employee-status')
-            .then(response => response.json())
-            .then(data => {
-                // Assuming the data is an array of status objects
-                const select = document.getElementById('employeeStatus');
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/api/employee-status')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(statuses => {
+            const select = document.getElementById('employeeStatus');
+            if (select) {
                 select.innerHTML = ''; // Clear existing options
-                data.forEach(item => {
-                    let option = new Option(item.status, item.status);
+                statuses.forEach(status => {
+                    let option = new Option(status, status);
                     select.add(option);
                 });
-            })
-            .catch(error => {
-                console.error('Error fetching employee status:', error);
-            });
-    });
+            } else {
+                console.error('Select element with ID "employeeStatus" not found.');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching employee statuses:', error);
+        });
+});
+
+ 
