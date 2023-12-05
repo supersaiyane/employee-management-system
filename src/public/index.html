@@ -70,19 +70,49 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="employeeStatus" class="form-label">Employee Status</label>
-                                        <select class="form-select" id="employeeStatus">
-                                             <option selected>Choose...</option>
-                                          <!--  <option value="active">Active</option>
-                                            <option value="inactive">Inactive</option> -->
-                                        </select>
+                                        <input class="form-control" id="employeeStatus" placeholder="Type to search...">
+                                        <div id="autocompleteList" class="autocomplete-items">
+                                            <!-- Autocomplete suggestions will be added here -->
+                                        </div>
                                     </div>
+                                    <div class="mb-3 form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="projectOptions" id="projectOption" value="project" onchange="showProjectDetails(this.value)">
+                                        <label class="form-check-label" for="projectOption">Project</label>
+                                    </div>
+                                    <div class="mb-3 form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="projectOptions" id="benchOption" value="bench" onchange="showProjectDetails(this.value)">
+                                        <label class="form-check-label" for="benchOption">Bench</label>
+                                    </div>
+
+                                    <div id="projectDetails" style="display:none;">
+                                        <div class="mb-3">
+                                            <label for="projectFromDate" class="form-label">From Date</label>
+                                            <input type="date" class="form-control" id="projectFromDate">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="employeeProject" class="form-label">Employee Project</label>
+                                            <select class="form-select" id="employeeProject">
+                                                <option selected>Choose...</option>
+                                                <!-- Add project options here -->
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="employeeLead" class="form-label">Employee Lead</label>
+                                            <select class="form-select" id="employeeLead">
+                                                <option selected>Choose...</option>
+                                                <!-- Add lead options here -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- eqw -->
+
                                 </form>
                             </div>
                         </div>
                     </div>
                 
                     <!-- Accordion Item 2: Project Details -->
-                    <div class="accordion-item">
+                    <!-- <div class="accordion-item">
                         <h2 class="accordion-header" id="headingProjectDetails">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProjectDetails" aria-expanded="false" aria-controls="collapseProjectDetails">
                                 Project Details
@@ -109,21 +139,19 @@
                                             <label for="employeeProject" class="form-label">Employee Project</label>
                                             <select class="form-select" id="employeeProject">
                                                 <option selected>Choose...</option>
-                                                <!-- Add project options here -->
                                             </select>
                                         </div>
                                         <div class="mb-3">
                                             <label for="employeeLead" class="form-label">Employee Lead</label>
                                             <select class="form-select" id="employeeLead">
                                                 <option selected>Choose...</option>
-                                                <!-- Add lead options here -->
                                             </select>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- Accordion Item for Excel File Upload -->
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingExcelUpload">

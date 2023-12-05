@@ -9,6 +9,11 @@ const fs = require('fs');
 const cors = require('cors');
 const db = require('./public/js/database'); // Importing your database connection
 const checkAuthentication = require('./public/js/authMiddleware'); // Import the authentication middleware
+const util = require('util');
+const query = util.promisify(db.query).bind(db);
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
 
 //Routes
 app.get('/', (req, res) => {
@@ -39,6 +44,51 @@ app.use(session({
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const swaggerOptions = {
+  definition: {
+      openapi: '3.0.0',
+      info: {
+          title: 'APIs',
+          version: '1.0.0',
+          description: 'CRUD API application with Express and documented with Swagger',
+      },
+      servers: [
+          {
+              url: 'http://localhost:3001',
+          },
+      ],
+  },
+  apis: ['./app.js'], // files containing annotations as above
+};
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+
+
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: Logs in a user
+ *     description: Login for existing user
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Logged in successfully
+ *       401:
+ *         description: Unauthorized
+ */
 app.post('/login', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -76,8 +126,6 @@ app.get('/logout', (req, res) => {
   });
 });
 
-const util = require('util');
-const query = util.promisify(db.query).bind(db);
 
 app.get('/api/employee-status', async (req, res) => {
   try {
@@ -91,9 +139,6 @@ app.get('/api/employee-status', async (req, res) => {
     res.status(500).send('An error occurred while fetching data');
   }
 });
-
-
-
 
 
 
